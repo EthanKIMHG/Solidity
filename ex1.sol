@@ -17,7 +17,7 @@ contract LocalVariables {
         x += 456;
         x1 = x;
         f = true;
-
+        // 함수의 호출이 발생할때마다  state Variable i값이 변함.
         i += 123;
         b = true;
         myAddress = address(3321);
