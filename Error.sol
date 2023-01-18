@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-pragma solidity ^0.8.7;
+pragma solidity ^0.8.10;
 
 // 이번엔 solidity에서 error에 관한 내용을 알아보겠습니다.
 // solidity에는 기본적으로, 컨트랙트와 상호작용에서 에러가 날경우 3가지의 stance를 취합니다.
@@ -49,4 +49,22 @@ contract Error {
     }
     return _i;
   }
+}
+
+
+contract exampleC {
+	uint256 public constant maxLimit = 1000;
+	mapping(address => bool) public frozenAccount; // frozenAccount를 public으로 정의하고, mapping 해주는데, 주소를 bool로 true or false로 나타냄.
+
+	function checkGas(uint256 amount) external view returns (bool) {
+		if (amount < maxLimit) return true;
+		return false;
+	}
+  // https://github.com/ethereum/solidity/issues/1290 이게 지금 오류임.
+  // 원래라면, constant가 pure없이 읽혀야 되지만 pure가 없으면 읽히지 않음.
+
+	function validateAccount(address account) internal view returns (bool) { // 이 함수는 계정검증 함수인데, 매개변수로 account가 들어감.
+		if (frozenAccount[account]) return true; // frozenAccount는 위에서 매핑으로 설정되어있기에, 매개변수인 account를 bool값으로 나타냄.
+		return false;
+	}
 }
