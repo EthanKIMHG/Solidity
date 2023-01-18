@@ -51,6 +51,27 @@ contract Error {
   }
 }
 
+contract Ex1 {
+  //157375
+  error MyError(address caller, uint i);
+
+  function testCustomError (uint _i) public view returns(uint){
+    if (_i >10) {
+      revert MyError(msg.sender, _i);
+    }
+    return _i;
+  }
+}
+contract Ex2 {
+  //185051
+    uint public i = 1;
+    function testRevert(uint _i) public view {
+    if (i < _i) {
+      revert("_i should bigger than i");
+    }
+  }
+}
+
 
 contract exampleC {
 	uint256 public constant maxLimit = 1000;
